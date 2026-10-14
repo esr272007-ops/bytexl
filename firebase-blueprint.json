@@ -1,0 +1,96 @@
+{
+  "entities": {
+    "Patient": {
+      "title": "Patient",
+      "description": "Patient user record containing profile, contact, and medical details",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique user/auth ID" },
+        "name": { "type": "string", "description": "Full name of patient" },
+        "email": { "type": "string", "description": "Email address" },
+        "phone": { "type": "string", "description": "Mobile phone number" },
+        "authMethod": { "type": "string", "description": "Login method: google, email, or mobile_otp" },
+        "age": { "type": "number", "description": "Age in years" },
+        "gender": { "type": "string", "description": "Gender" },
+        "bloodGroup": { "type": "string", "description": "Blood group" },
+        "address": { "type": "string", "description": "Residential address or city" },
+        "medicalHistory": { "type": "string", "description": "Summary of medical conditions" },
+        "allergies": { "type": "string", "description": "Known allergies" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of registration" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      },
+      "required": ["uid", "name"]
+    },
+    "Doctor": {
+      "title": "Doctor",
+      "description": "Healthcare specialist and physician details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Doctor unique identifier" },
+        "name": { "type": "string", "description": "Doctor full name and title" },
+        "specialty": { "type": "string", "description": "Medical specialty" },
+        "experience": { "type": "string", "description": "Years of experience" },
+        "rating": { "type": "number", "description": "Review score out of 5" },
+        "phone": { "type": "string", "description": "Contact phone" },
+        "email": { "type": "string", "description": "Contact email" },
+        "availableDays": { "type": "string", "description": "Availability schedule" },
+        "consultationFee": { "type": "string", "description": "Fee per consultation" },
+        "hospital": { "type": "string", "description": "Associated clinic or hospital" },
+        "bio": { "type": "string", "description": "Professional background and credentials" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of registration" }
+      },
+      "required": ["id", "name", "specialty"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Patient booking with a doctor",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Appointment ID" },
+        "patientId": { "type": "string", "description": "Patient UID" },
+        "patientName": { "type": "string", "description": "Patient name" },
+        "doctorId": { "type": "string", "description": "Doctor ID" },
+        "doctorName": { "type": "string", "description": "Doctor name" },
+        "specialty": { "type": "string", "description": "Specialty" },
+        "date": { "type": "string", "description": "Date of appointment (YYYY-MM-DD)" },
+        "time": { "type": "string", "description": "Time slot" },
+        "symptoms": { "type": "string", "description": "Reported symptoms" },
+        "status": { "type": "string", "description": "confirmed, completed, or cancelled" },
+        "createdAt": { "type": "string", "description": "Booking timestamp" }
+      },
+      "required": ["id", "patientId", "doctorId", "date", "time"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Gemini Health Copilot consultation message",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Message ID" },
+        "userId": { "type": "string", "description": "User UID" },
+        "sender": { "type": "string", "description": "user or bot" },
+        "text": { "type": "string", "description": "Message content" },
+        "language": { "type": "string", "description": "Language code (en, hi, te)" },
+        "timestamp": { "type": "string", "description": "Timestamp string" }
+      },
+      "required": ["id", "userId", "sender", "text"]
+    }
+  },
+  "firestore": {
+    "/patients/{patientId}": {
+      "schema": { "$ref": "#/entities/Patient" },
+      "description": "Secure storage of patient registration, personal, and medical profile details"
+    },
+    "/doctors/{doctorId}": {
+      "schema": { "$ref": "#/entities/Doctor" },
+      "description": "Catalog of verified doctors and medical specialists"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": { "$ref": "#/entities/Appointment" },
+      "description": "Scheduled appointments between patients and doctors"
+    },
+    "/copilotMessages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Persisted AI Health Copilot conversation history"
+    }
+  }
+}

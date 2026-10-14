@@ -1,0 +1,6 @@
+{
+  "name": "SMART-MEDX Health Copilot",
+  "description": "Unified Health Portal and Multilingual Health Copilot for Patients, Doctors, and Hospitals with Google Gemini AI medical document analysis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
